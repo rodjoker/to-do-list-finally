@@ -23,6 +23,7 @@ export const todoReducer = (initialState, action) => {
         if(todo.id === action.payload.id){
             return {
                  ...todo,
+                 taskName: action.payload.taskName,
                  description: action.payload.description,
                 }
             }

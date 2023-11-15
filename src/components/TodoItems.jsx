@@ -37,6 +37,7 @@ export const TodoItems = ({
     return (
     <div>
  <TodoUpdate
+             setEdit={setEdit}
              todo={todo}
              handleUpdateTodo={handleUpdateTodo}
           />

@@ -4,14 +4,18 @@ import { useForm } from '../hooks/useForm';
 
 export const TodoUpdate = ({ 
     todo, 
-    handleUpdateTodo, 
+    handleUpdateTodo,
+    setEdit 
 })  => {
 
-const [task, setTask] = useState("");
-const [description, setDescription] = useState("");
 
-    const { updateDescription, updateTaskName ,onInputChange } = useForm({
-    updateTaskName: todo.taskName,
+const [task, setTask] = useState("");
+const [description, setDescription] = useState(todo.description);
+const [name, setName] = useState(todo.taskName);
+
+
+    const { onInputChange } = useForm({
+    updateTaskName: todo.name,
 		updateDescription: todo.description, 
 	});
 
@@ -22,16 +26,16 @@ const [description, setDescription] = useState("");
 		e.preventDefault();
 
 		const id = todo.id;
-		const description = updateDescription;
-    const taskName = updateTaskName;
+	console.log("sirve")
 
-		handleUpdateTodo(id, description, taskName);
-
+		handleUpdateTodo(id, description, name);
+console.log(id, description, name)
 		setDisabled(!disabled);
 
 		focusInputRef.current.focus();
 
     onInputChange(task, description);
+    setEdit(true);
 	};
 
 
@@ -43,10 +47,10 @@ const [description, setDescription] = useState("");
 					todo.done ? 'text-decoration-dashed' : ''
 				}`} 
         name='updateTask'
-        value={updateTaskName}
-        onChange={({target}) => setTask(target.value) }
+        value={name}
+        onChange={({target}) => setName(target.value) }
         placeholder="MODIFY?"
-        readOnly={disabled}
+        //readOnly={disabled}
 		ref={focusInputRef}
       />
       <input 
@@ -55,10 +59,10 @@ const [description, setDescription] = useState("");
 					todo.done ? 'text-decoration-dashed' : ''
 				}`} 
         name='updateDescription'
-        value={updateDescription}
+        value={description}
         onChange={({target}) => setDescription(target.value) }
         placeholder="MODIFY?"
-        readOnly={disabled}
+        //readOnly={disabled}
 		ref={focusInputRef}
       />
       <button className="btn-edit" type="submit">

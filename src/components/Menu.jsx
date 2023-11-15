@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useColorMode } from '@chakra-ui/react';
 
 import { Button, Stack } from '@chakra-ui/react'
 function Menu() {
+  const { colorMode, toggleColorMode } = useColorMode()
   return (
     
 <div className="menu">
@@ -34,6 +36,9 @@ function Menu() {
       </Link>
     </Button>    
 
+    <Button onClick={toggleColorMode} size='xs' >
+        🔆 {colorMode === 'light' ? 'Dark' : 'Light'}
+      </Button>
   
 </Stack>
 

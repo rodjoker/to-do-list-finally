@@ -1,10 +1,13 @@
 import { useForm } from "../hooks/useForm"
+import { useState } from "react";
 
 
 export const TodoAdd = ({ handleNewTodo}) => {
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
 
   const { 
-    taskName ,description, onInputChange, onResetForm
+     onInputChange, onResetForm
   } = useForm({
     taskName: '',
     description:'',
@@ -13,18 +16,21 @@ export const TodoAdd = ({ handleNewTodo}) => {
   const onFormSubmit = e => {
     e.preventDefault()
     
-    if(description.length <= 1 || taskName.length <= 1) return;
+    if(description.length <= 1 || name.length <= 1) return;
 
     let newTodo = {
       id: new Date().getTime(),
-      taskName: taskName,
+      taskName: name,
       description: description,
       done: false
     }
 
     handleNewTodo(newTodo);
+    onInputChange(name, description);
     onResetForm();
 
+    setName("");
+    setDescription("");
   }
 
   return (
@@ -33,8 +39,8 @@ export const TodoAdd = ({ handleNewTodo}) => {
         type="text" 
         className="input-add" 
         name='taskName'
-        value={taskName}
-        onChange={onInputChange}
+        value={name}
+        onChange={({target}) => setName(target.value)}
         placeholder='add task'
       />
       <input 
@@ -42,7 +48,7 @@ export const TodoAdd = ({ handleNewTodo}) => {
         className="input-add" 
         name='description'
         value={description}
-        onChange={onInputChange}
+        onChange={({target}) => setDescription(target.value)}
         placeholder='add description'
       />
       <button className='btn-add' type='submit' >
